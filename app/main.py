@@ -1,20 +1,19 @@
 import numpy as np
-import tensorflow as tf
+from tflite_runtime.interpreter import Interpreter
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 from mangum import Mangum
 from sklearn.preprocessing import StandardScaler
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+from keras_preprocessing.sequence import pad_sequences
 
 app = FastAPI()
 
 # TensorFlow Lite 모델 로드
-interpreter = tf.lite.Interpreter(model_path="./static/LSTM_model/model_1.tflite")
+interpreter = Interpreter(model_path="./static/LSTM_model/model_1.tflite")
 interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
-
 
 class SensorData(BaseModel):
     accX: float
