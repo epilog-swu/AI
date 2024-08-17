@@ -1,0 +1,16 @@
+.aws-sam
+
+venv
+venv/*
+
+samconfig.toml
+template.yaml
+
+*/static/*
+__pycache__
+
+.DS_Store
+.idea/
+app/.DS_Store
+
+*/__init__.py
