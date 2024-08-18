@@ -9,12 +9,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 app = FastAPI()
 
-# TensorFlow Lite 모델 로드
-interpreter = tf.lite.Interpreter(model_path="./static/LSTM_model/model_1.tflite")
-interpreter.allocate_tensors()
-input_details = interpreter.get_input_details()
-output_details = interpreter.get_output_details()
-
+model = tf.keras.models.load_model('./static/LSTM_model/model_1.keras')
 
 class SensorData(BaseModel):
     accX: float
@@ -24,12 +19,10 @@ class SensorData(BaseModel):
     gyroY: float
     gyroZ: float
 
-
 class RequestBody(BaseModel):
     fall: List[SensorData]
 
 def preprocess_input(data: List[SensorData]):
-    # 데이터 전처리 (정규화 포함)
     data = np.array([[item.accX, item.accY, item.accZ, item.gyroX, item.gyroY, item.gyroZ] for item in data])
 
     scaler = StandardScaler()
@@ -49,9 +42,7 @@ async def predict(item: RequestBody):
     try:
         input_data = preprocess_input(item.fall)
 
-        interpreter.set_tensor(input_details[0]['index'], input_data)
-        interpreter.invoke()
-        prediction = interpreter.get_tensor(output_details[0]['index'])
+        prediction = model.predict(input_data)
 
         result = bool(prediction[0] > 0.5)
 
