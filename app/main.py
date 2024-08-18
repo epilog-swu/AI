@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 app = FastAPI()
 
-model = tf.keras.models.load_model('./static/LSTM_model/model_1.keras')
+model = tf.keras.models.load_model('./static/LSTM_model/model_2.keras')
 
 class SensorData(BaseModel):
     accX: float
