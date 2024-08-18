@@ -1,0 +1,9 @@
+.git
+.github
+.vscode
+tests
+docs
+*.md
+app/static/images
+app/static/learning
+app/static/training_data
