@@ -7,21 +7,22 @@
 
 ## 프로젝트 실행 방법
 깃 레포지토리 클론
-```
-git clone
+```bash
+git clone https://github.com/epilog-swu/AI.git
 cd AI
 ```
 파이썬 가상환경 세팅
-```
+```bash
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate (mac) 
+source venv/Scripts/activate (window)
 ```
 라이브러리 설치
-```
+```bash
 pip install -r /app/requirements.txt
 ```
 서버 실행
-```
+```bash
 uvicorn main:app -reload
 ```
 
