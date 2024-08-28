@@ -22,6 +22,7 @@ class SensorData(BaseModel):
 class RequestBody(BaseModel):
     fall: List[SensorData]
 
+# 입력 데이터 전처리
 def preprocess_input(data: List[SensorData]):
     data = np.array([[item.accX, item.accY, item.accZ, item.gyroX, item.gyroY, item.gyroZ] for item in data])
 
@@ -33,10 +34,7 @@ def preprocess_input(data: List[SensorData]):
 
     return padded_data
 
-@app.get("/")
-def read_root():
-    return {"Message": "Hello World"}
-
+# 2차 낙상 감지 엔드포인트
 @app.post("/api/ai/predict")
 async def predict(item: RequestBody):
     try:
@@ -51,4 +49,5 @@ async def predict(item: RequestBody):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+# AWS Lambda 연결 핸들러
 handler = Mangum(app)
